@@ -368,12 +368,6 @@ def main():
     # Perform correlation analysis
     corr_file = correlation_analysis(df)
 
-    # # Perform clustering
-    # df = perform_clustering(df)
-
-    # # Perform PCA for dimensionality reduction
-    # df = perform_pca(df)
-
     # Generate visualizations
     visualizations = []
     if corr_file:
