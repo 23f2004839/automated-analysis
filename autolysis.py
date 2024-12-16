@@ -92,46 +92,6 @@ def correlation_analysis(df):
         return corr_file
     return None
 
-# def handle_missing_values(df):
-#     """ Impute missing values with different strategies for numeric and categorical columns. """
-#     # Impute numeric columns with the mean
-#     numeric_cols = df.select_dtypes(include='number').columns
-#     numeric_imputer = SimpleImputer(strategy='mean')
-#     df[numeric_cols] = numeric_imputer.fit_transform(df[numeric_cols])
-    
-#     # Impute categorical columns with the most frequent value
-#     categorical_cols = df.select_dtypes(include='object').columns
-#     categorical_imputer = SimpleImputer(strategy='most_frequent')
-#     df[categorical_cols] = categorical_imputer.fit_transform(df[categorical_cols])
-    
-#     return df
-
-# def perform_clustering(df):
-#     """ Perform KMeans clustering on numerical data. """
-#     num_cols = df.select_dtypes(include='number').columns
-#     df = handle_missing_values(df)
-#     if len(num_cols) > 1:
-#         scaler = StandardScaler()
-#         scaled_data = scaler.fit_transform(df[num_cols])
-#         kmeans = KMeans(n_clusters=3, random_state=42)
-#         df['Cluster'] = kmeans.fit_predict(scaled_data)
-#         print("Clustering complete.")
-#         return df
-#     return df
-
-# def perform_pca(df):
-#     """ Perform PCA for dimensionality reduction. """
-#     num_cols = df.select_dtypes(include='number').columns
-#     if len(num_cols) > 2:
-#         scaler = StandardScaler()
-#         scaled_data = scaler.fit_transform(df[num_cols])
-#         pca = PCA(n_components=2)
-#         pca_result = pca.fit_transform(scaled_data)
-#         df['PCA1'] = pca_result[:, 0]
-#         df['PCA2'] = pca_result[:, 1]
-#         print("PCA complete.")
-#     return df
-
 def generate_visualizations(df):
     """ Generate visualizations based on dataset statistics. """
     images = []
@@ -232,6 +192,11 @@ Don't add countplot for categorical columns
 
 if you provide any plots then save them in current directory (use seaborn)
 If you suggest a function call, please also explain why it's useful.
+
+read file using:
+with open(csv_file, 'rb') as f:
+    encoding_result = chardet.detect(f.read())
+df = pd.read_csv(csv_file, encoding=encoding_result['encoding'])
 """
     prompt_content = create_prompt_content(text, images_path=[])
     response = call_llm_api(prompt_content)
