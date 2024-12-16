@@ -4,7 +4,10 @@
 #   "pandas",
 #   "matplotlib",
 #   "seaborn",
-#   "openai",
+#   "scikit-learn",
+#   "tenacity",
+#   "requests",
+#   "chardet",
 # ]
 # ///
 
@@ -19,6 +22,7 @@ import requests
 import time
 from datetime import datetime
 import base64
+import chardet
 from sklearn.impute import SimpleImputer
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
@@ -380,7 +384,10 @@ def main():
 
     #Load the dataset
     try:
-        df = pd.read_csv(csv_file)
+        with open(csv_file, 'rb') as f:
+            encoding_result = chardet.detect(f.read())
+            df = pd.read_csv(csv_file, encoding=encoding_result['encoding'])
+
         print(f"Dataset loaded successfully: {csv_file}")
     except Exception as e:
         print(f"Error loading dataset: {e}")
